@@ -24,7 +24,8 @@ amavis:
     - /opt/dockermail/settings:/mail_settings
 mailman:
   build: ./mailman
-  ports:
-    - "80:80"
   volumes:
     - /opt/dockermail/mailman:/mailman/var
+  environment:
+    - VIRTUAL_HOST=mailman.sesc.eu
+    - LETSENCRYPT_EMAIL=mail@sesc.eu
