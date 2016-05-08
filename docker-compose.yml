@@ -8,12 +8,14 @@ core:
   volumes:
     - /opt/dockermail/settings:/mail_settings
     - /opt/dockermail/vmail:/vmail
-  volumes_from:
-    - mailman
+    - /opt/dockermail/postgrey/etc:/etc/postgrey
+    - /opt/dockermail/postgrey/lib:/var/lib/postgrey
+#  volumes_from:
+#    - mailman
   links:
    - opendkim
    - amavis
-   - mailman
+#   - mailman
 opendkim:
   build: ./opendkim
   volumes:
@@ -22,10 +24,11 @@ amavis:
   build: ./amavis
   volumes:
     - /opt/dockermail/settings:/mail_settings
-mailman:
-  build: ./mailman
-  volumes:
-    - /opt/dockermail/mailman:/mailman/var
-  environment:
-    - VIRTUAL_HOST=mailman.sesc.eu
-    - LETSENCRYPT_EMAIL=mail@sesc.eu
+#mailman:
+#  build: ./mailman
+#  volumes:
+#    - /opt/dockermail/settings:/mail_settings
+#    - /opt/dockermail/mailman:/mailman/var
+#  environment:
+#    - VIRTUAL_HOST=mailman.sesc.eu
+#    - LETSENCRYPT_EMAIL=mail@sesc.eu

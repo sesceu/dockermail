@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     dovecot-imapd \
     dovecot-sieve \
     dovecot-ldap \	
+    postgrey \
     jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
@@ -38,9 +39,12 @@ VOLUME ["/vmail"]
 # Volume to store sieve-rules
 VOLUME ["/sieve"]
 
+# Volume for postgrey's whitelists
+VOLUME ["/etc/postgrey"]
+
 # Add user vmail that ownes mail and sieve
 RUN groupadd -g 5000 vmail
 RUN useradd -g vmail -u 5000 vmail -d /vmail -m
 
 EXPOSE 25 143 587 993
-CMD /boot; service postfix start; service dovecot start; rsyslogd -n
+CMD /boot; service postgrey start; service postfix start; service dovecot start; rsyslogd -n
