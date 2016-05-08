@@ -42,6 +42,9 @@ VOLUME ["/sieve"]
 # Volume for postgrey's whitelists
 VOLUME ["/etc/postgrey"]
 
+# Volume for postgrey's database
+VOLUME ["/var/lib/postgrey"]
+
 # Add user vmail that ownes mail and sieve
 RUN groupadd -g 5000 vmail
 RUN useradd -g vmail -u 5000 vmail -d /vmail -m
